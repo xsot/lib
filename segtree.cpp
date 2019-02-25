@@ -1,5 +1,5 @@
 // Lazy segment tree
-// O(n) construction, O(log n) updates, O(n) queries
+// O(n) construction, O(log n) updates, O(log n) queries
 // Commented lines need to be customised
 // Example: range increment update with range sum query (SPOJ HORRIBLE)
 
