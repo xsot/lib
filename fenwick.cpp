@@ -5,7 +5,7 @@ struct fenwick {
     vector<int> a; // 0-index interface but 1-index implementation
     int n;
 
-    fenwick(int sz) : n(sz+1), a(sz) {}
+    fenwick(int sz) : n(sz+1), a(sz+1) {}
     fenwick(vector<int>& v) : fenwick(v.size()) {
         for (int i=0; i < v.size(); i++) update(i, v[i]);
     }
