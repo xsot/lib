@@ -23,27 +23,27 @@ struct node_update {
     int order_of_key(int x, Node_CItr it) {
         if (it == node_end()) return 0;
         auto l_it = it.get_l_child(), r_it = it.get_r_child();
-        if (Cmp_Fn()(x, **it)) // x < cur
+        if (Cmp_Fn()(x, **it)) // x < node value
             return order_of_key(x, l_it);
-        if (Cmp_Fn()(**it, x)) // x > cur
+        if (Cmp_Fn()(**it, x)) // x > node value
             return 1 + at(l_it) + order_of_key(x, r_it);
         return at(l_it);
     }
 
     int find_by_order(int k) { return find_by_order(k, node_begin()); }
     int find_by_order(int k, Node_CItr it) {
-        if (it == node_end()) return -INF;
+        if (it == node_end()) return -INF; // Assuming k is valid, this never happens
         auto l_it = it.get_l_child(), r_it = it.get_r_child();
         metadata_type order = at(l_it);
-        if (k == order)
-            return **it;
         if (k < order)
             return find_by_order(k, l_it);
-        return find_by_order(k-order-1, r_it);
+        if (k > order)
+            return find_by_order(k-order-1, r_it);
+        return **it;
     }
 
     // This method restores the invariant of the node and must be implemented
-    // `it` is a node whose decendants have valid invariants, and whose invariant may be violated
+    // `it` is a node whose decendants have valid invariants and whose own invariant may be violated
     // Example invariant: size of subtree
     void operator()(Node_Itr it, Node_CItr) {
         auto l_it = it.get_l_child(), r_it = it.get_r_child();
