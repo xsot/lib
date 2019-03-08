@@ -43,7 +43,7 @@ struct node_update {
     }
 
     // This method restores the invariant of the node and must be implemented
-    // `it` is a node whose decendants have valid invariants and whose own invariant may be violated
+    // `it` is a node whose descendants have valid invariants and whose own invariant may be violated
     // Warning: not called on changes to mapped values (work around by reinserting)
     // Example invariant: size of subtree
     void operator()(Node_Itr it, Node_CItr) {
