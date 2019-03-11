@@ -6,7 +6,7 @@ template<typename T>
 struct dinic {
     struct edge {
         int u, v;
-        T cap, flow = 0;
+        T cap, flow;
     };
     const T FLOW_INF = numeric_limits<T>::max();
     vector<edge> edges;
