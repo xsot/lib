@@ -4,21 +4,25 @@
 // Example: range increment update with range sum query (SPOJ HORRIBLE)
 
 struct segtree {
+    struct node {
+        ll sum;
+    };
     int n;
-    vector<ll> t, lazy;
+    vector<node> t;
+    vector<ll> lazy;
 
     segtree(int sz) : n(sz), t(n*4), lazy(n*4) {}
-    segtree(vector<ll>& a) : segtree(a.size()) {
+    segtree(vector<node>& a) : segtree(a.size()) {
         build(a, 1, 0, n-1);
     }
 
-    ll combine(ll a, ll b) { // monoid operation
-        return a + b;
+    node combine(node a, node b) { // monoid operation
+        return {a.sum + b.sum};
     }
 
-    void build(vector<ll>& a, int v, int l, int r) {
+    void build(vector<node>& a, int v, int l, int r) {
         if (l == r) {
-            t[v] = a[l]; // init
+            t[v] = {a[l]}; // init
         } else {
             build(a, v*2, l, (l+r)/2);
             build(a, v*2+1, (l+r)/2+1, r);
@@ -28,7 +32,7 @@ struct segtree {
 
     void push(int v, int l, int r) {
         if (lazy[v]) {
-            t[v] += lazy[v]*(r-l+1); // apply lazy
+            t[v].sum += lazy[v]*(r-l+1); // apply lazy
             if (l != r) {
                 lazy[v*2] += lazy[v]; // compose lazy
                 lazy[v*2+1] += lazy[v];
@@ -52,10 +56,10 @@ struct segtree {
         }
     }
 
-    ll query(int ql, int qr) { return query(ql, qr, 1, 0, n-1); }
-    ll query(int ql, int qr, int v, int l, int r) {
+    node query(int ql, int qr) { return query(ql, qr, 1, 0, n-1); }
+    node query(int ql, int qr, int v, int l, int r) {
         push(v, l, r);
-        if (ql > qr) return 0; // identity
+        if (ql > qr) return {0}; // identity
         if (ql == l && r == qr) return t[v];
         int m = (l+r)/2;
         return combine(query(ql, min(qr, m), v*2, l, m), query(max(ql, m+1), qr, v*2+1, m+1, r));
