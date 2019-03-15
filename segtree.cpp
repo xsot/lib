@@ -12,7 +12,7 @@ struct segtree {
     vector<ll> lazy;
 
     segtree(int sz) : n(sz), t(n*4), lazy(n*4) {}
-    segtree(vector<node>& a) : segtree(a.size()) {
+    segtree(vector<int>& a) : segtree(a.size()) {
         build(a, 1, 0, n-1);
     }
 
@@ -20,7 +20,7 @@ struct segtree {
         return {a.sum + b.sum};
     }
 
-    void build(vector<node>& a, int v, int l, int r) {
+    void build(vector<int>& a, int v, int l, int r) {
         if (l == r) {
             t[v] = {a[l]}; // init
         } else {
