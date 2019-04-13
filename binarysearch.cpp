@@ -8,7 +8,6 @@ int lower_bound(int lo, int hi, Predicate p) {
         if (p(mid)) hi = mid;
         else        lo = mid+1;
     }
-    if (!p(lo)) return hi;
     return lo;
 }
 
@@ -22,7 +21,6 @@ int upper_bound(int lo, int hi, Predicate p) {
         if (p(mid)) lo = mid+1;
         else        hi = mid;
     }
-    if (p(lo)) return hi;
     return lo;
 }
 
